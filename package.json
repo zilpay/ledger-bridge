@@ -1,0 +1,60 @@
+{
+  "name": "ledger-bridge",
+  "version": "0.0.1",
+  "description": "Ledger bridge",
+  "author": "lich666dead",
+  "license": "MIT",
+  "private": false,
+  "main": "src/js/main.js",
+  "scripts": {
+    "clean": "gulp clean",
+    "dev": "gulp dev",
+    "build": "gulp build",
+    "build-dev": "npm run build-js",
+    "build-js": "gulp buildJS"
+  },
+  "filesToCopyGlobs": {
+    "fonts": "src/**/*.{eot,svg,ttf,woff,woff2}"
+  },
+  "globs": {
+    "html": "src/**/*.html",
+    "js": "src/**/*.js"
+  },
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "useBuiltIns": "usage",
+          "corejs": 3
+        }
+      ]
+    ]
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.4.4",
+    "@ledgerhq/hw-transport": "^4.61.0",
+    "@ledgerhq/hw-transport-u2f": "^4.61.0",
+    "@zilliqa-js/zilliqa": "^0.6.3",
+    "core-js": "^3.1.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
+    "autoprefixer": "^9.5.1",
+    "babelify": "^10.0.0",
+    "browser-sync": "^2.26.5",
+    "browserify": "^16.2.3",
+    "cssnano": "^4.1.10",
+    "fs-extra": "^8.0.1",
+    "gulp": "^4.0.2",
+    "gulp-babel": "^8.0.0",
+    "gulp-data": "^1.3.1",
+    "gulp-imagemin": "^6.0.0",
+    "gulp-nunjucks-render": "^2.2.3",
+    "gulp-sourcemaps": "^2.6.5",
+    "gulp-uglify": "^3.0.2",
+    "vinyl-buffer": "^1.0.1",
+    "vinyl-source-stream": "^2.0.0"
+  }
+}
