@@ -17,7 +17,7 @@ async function transportInit() {
 function sendResponse(origin, payload, response) {
   const type = typeMSG.res;
   const msg = Object.assign(new Object(), payload, { type }, response);
-  console.log(msg);
+  console.log(msg.type);
   window.top.postMessage(msg, origin);
 }
 
