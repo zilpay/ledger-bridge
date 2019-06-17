@@ -33,6 +33,7 @@ async function handler({ origin, data }) {
     const resolve = await zil[data.method](...data.args);
     sendResponse(origin, data, { resolve });
   } catch(err) {
+    console.log(err);
     sendResponse(origin, data, { reject: err.message });
   }
 }

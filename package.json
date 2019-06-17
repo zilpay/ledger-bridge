@@ -7,7 +7,6 @@
   "private": false,
   "main": "src/js/main.js",
   "scripts": {
-    "clean": "gulp clean",
     "dev": "gulp dev",
     "build": "gulp build",
     "build-dev": "npm run build-js",
@@ -35,6 +34,8 @@
     "@babel/polyfill": "^7.4.4",
     "@ledgerhq/hw-transport": "^4.61.0",
     "@ledgerhq/hw-transport-u2f": "^4.61.0",
+    "@ledgerhq/hw-transport-webauthn": "^4.61.0",
+    "@ledgerhq/hw-transport-webusb": "^4.61.0",
     "@zilliqa-js/zilliqa": "^0.6.3",
     "core-js": "^3.1.3"
   },
