@@ -33,10 +33,6 @@ exports["default"] = void 0;
 
 require("regenerator-runtime/runtime");
 
-var _hwTransportU2f = _interopRequireDefault(require("@ledgerhq/hw-transport-u2f"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
@@ -46,6 +42,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var TransportU2F = require('@ledgerhq/hw-transport-u2f')["default"];
 
 var txnEncoder = require('@zilliqa-js/account/dist/util').encodeTransactionProto;
 
@@ -58,11 +56,12 @@ var INS = {
   "getVersion": 0x01,
   "getPublickKey": 0x02,
   "getPublicAddress": 0x02,
-  "signHash": 0x04,
-  "signTxn": 0x08
+  "signTxn": 0x04
 };
 var PubKeyByteLen = 33;
-var SigByteLen = 64; // https://github.com/Zilliqa/Zilliqa/wiki/Address-Standard#specification
+var AddrByteLen = 20;
+var SigByteLen = 64;
+var HashByteLen = 32; // https://github.com/Zilliqa/Zilliqa/wiki/Address-Standard#specification
 
 var Bech32AddrLen = "zil".length + 1 + 32 + 6;
 /**
@@ -87,7 +86,7 @@ function () {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return _hwTransportU2f["default"].create();
+                return TransportU2F.create();
 
               case 2:
                 return _context.abrupt("return", _context.sent);
@@ -195,12 +194,62 @@ function () {
         txnParams.gasLimit = Long.fromNumber(txnParams.gasLimit);
       }
 
-      var encodedTxn = txnEncoder(txnParams);
-      var txnSizeBytes = Buffer.alloc(4);
-      txnSizeBytes.writeInt32LE(encodedTxn.length);
-      var payload = Buffer.concat([indexBytes, txnSizeBytes, encodedTxn]);
-      return this.transport.send(CLA, INS.signTxn, P1, P2, payload).then(function (response) {
-        return response.toString('hex').slice(0, SigByteLen * 2);
+      var txnBytes = txnEncoder(txnParams);
+      var STREAM_LEN = 32; // Stream in batches of STREAM_LEN bytes each.
+
+      var txn1Bytes;
+
+      if (txnBytes.length > STREAM_LEN) {
+        txn1Bytes = txnBytes.slice(0, STREAM_LEN);
+        txnBytes = txnBytes.slice(STREAM_LEN, undefined);
+      } else {
+        txn1Bytes = txnBytes;
+        txnBytes = Buffer.alloc(0);
+      }
+
+      var txn1SizeBytes = Buffer.alloc(4);
+      txn1SizeBytes.writeInt32LE(txn1Bytes.length);
+      var hostBytesLeftBytes = Buffer.alloc(4);
+      hostBytesLeftBytes.writeInt32LE(txnBytes.length); // See signTxn.c:handleSignTxn() for sequence details of payload.
+      // 1. 4 bytes for indexBytes.
+      // 2. 4 bytes for hostBytesLeftBytes.
+      // 3. 4 bytes for txn1SizeBytes (number of bytes being sent now).
+      // 4. txn1Bytes of actual data.
+
+      var payload = Buffer.concat([indexBytes, hostBytesLeftBytes, txn1SizeBytes, txn1Bytes]);
+      var transport = this.transport;
+      return transport.send(CLA, INS.signTxn, P1, P2, payload).then(function cb(response) {
+        // Keep streaming data into the device till we run out of it.
+        // See signTxn.c:istream_callback() for how this is used.
+        // Each time the bytes sent consists of:
+        //  1. 4-bytes of hostBytesLeftBytes.
+        //  2. 4-bytes of txnNSizeBytes (number of bytes being sent now).
+        //  3. txnNBytes of actual data.
+        if (txnBytes.length > 0) {
+          var txnNBytes;
+
+          if (txnBytes.length > STREAM_LEN) {
+            txnNBytes = txnBytes.slice(0, STREAM_LEN);
+            txnBytes = txnBytes.slice(STREAM_LEN, undefined);
+          } else {
+            txnNBytes = txnBytes;
+            txnBytes = Buffer.alloc(0);
+          }
+
+          var txnNSizeBytes = Buffer.alloc(4);
+          txnNSizeBytes.writeInt32LE(txnNBytes.length);
+          hostBytesLeftBytes.writeInt32LE(txnBytes.length);
+
+          var _payload = Buffer.concat([hostBytesLeftBytes, txnNSizeBytes, txnNBytes]);
+
+          return transport.exchange(_payload).then(cb);
+        }
+
+        return response;
+      }).then(function (result) {
+        return {
+          sig: result.toString('hex').slice(0, SigByteLen * 2)
+        };
       });
     }
   }]);

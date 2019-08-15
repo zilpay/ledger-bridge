@@ -33,6 +33,7 @@
   "dependencies": {
     "@babel/polyfill": "^7.4.4",
     "@ledgerhq/hw-transport-u2f": "^4.68.2",
+    "@ledgerhq/hw-transport-webauthn": "^4.68.2",
     "@zilliqa-js/zilliqa": "^0.7.4",
     "core-js": "^3.1.4"
   },
