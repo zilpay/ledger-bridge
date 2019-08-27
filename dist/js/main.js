@@ -33,10 +33,6 @@ exports["default"] = void 0;
 
 require("regenerator-runtime/runtime");
 
-var _hwTransportU2f = _interopRequireDefault(require("@ledgerhq/hw-transport-u2f"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
@@ -47,22 +43,28 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+var TransportU2F = require('@ledgerhq/hw-transport-u2f')["default"];
+
 var txnEncoder = require('@zilliqa-js/account/dist/util').encodeTransactionProto;
 
 var _require = require('@zilliqa-js/util'),
     BN = _require.BN,
     Long = _require.Long;
 
+var DEFAULT_LEDGER_INTERACTIVE_TIMEOUT = 50000;
+var DEFAULT_LEDGER_NONINTERACTIVE_TIMEOUT = 3000;
+var SCRAMBLE_KEY = 'w0w';
 var CLA = 0xe0;
 var INS = {
   "getVersion": 0x01,
   "getPublickKey": 0x02,
   "getPublicAddress": 0x02,
-  "signHash": 0x04,
-  "signTxn": 0x08
+  "signTxn": 0x04
 };
 var PubKeyByteLen = 33;
-var SigByteLen = 64; // https://github.com/Zilliqa/Zilliqa/wiki/Address-Standard#specification
+var AddrByteLen = 20;
+var SigByteLen = 64;
+var HashByteLen = 32; // https://github.com/Zilliqa/Zilliqa/wiki/Address-Standard#specification
 
 var Bech32AddrLen = "zil".length + 1 + 32 + 6;
 /**
@@ -87,7 +89,7 @@ function () {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return _hwTransportU2f["default"].create();
+                return TransportU2F.create();
 
               case 2:
                 return _context.abrupt("return", _context.sent);
@@ -109,12 +111,28 @@ function () {
   }]);
 
   function Zilliqa(transport) {
-    var scrambleKey = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'w0w';
+    var interactiveTimeout = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : DEFAULT_LEDGER_INTERACTIVE_TIMEOUT;
+    var nonInteractiveTimeout = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : DEFAULT_LEDGER_NONINTERACTIVE_TIMEOUT;
 
     _classCallCheck(this, Zilliqa);
 
-    this.transport = transport;
-    transport.decorateAppAPIMethods(this, Object.keys(INS), scrambleKey);
+    if (!transport || !transport.send) {
+      throw new Error('LedgerApp expected a Transport');
+    }
+
+    this._transport = transport;
+
+    this._transport.decorateAppAPIMethods(this, Object.keys(INS), SCRAMBLE_KEY);
+
+    if (typeof interactiveTimeout === "number") {
+      this._interactiveTimeout = interactiveTimeout;
+    }
+
+    if (typeof nonInteractiveTimeout === "number") {
+      this._nonInteractiveTimeout = nonInteractiveTimeout;
+    }
+
+    this._transport.setScrambleKey(SCRAMBLE_KEY);
   }
 
   _createClass(Zilliqa, [{
@@ -122,7 +140,7 @@ function () {
     value: function getVersion() {
       var P1 = 0x00;
       var P2 = 0x00;
-      return this.transport.send(CLA, INS.getVersion, P1, P2).then(function (response) {
+      return this._transport.send(CLA, INS.getVersion, P1, P2).then(function (response) {
         var version = "v";
 
         for (var i = 0; i < 3; ++i) {
@@ -145,7 +163,7 @@ function () {
       var P2 = 0x00;
       var payload = Buffer.alloc(4);
       payload.writeInt32LE(index);
-      return this.transport.send(CLA, INS.getPublickKey, P1, P2, payload).then(function (response) {
+      return this._transport.send(CLA, INS.getPublickKey, P1, P2, payload).then(function (response) {
         // The first PubKeyByteLen bytes are the public address.
         var publicKey = response.toString("hex").slice(0, PubKeyByteLen * 2);
         return {
@@ -160,7 +178,7 @@ function () {
       var P2 = 0x01;
       var payload = Buffer.alloc(4);
       payload.writeInt32LE(index);
-      return this.transport.send(CLA, INS.getPublicAddress, P1, P2, payload).then(function (response) {
+      return this._transport.send(CLA, INS.getPublicAddress, P1, P2, payload).then(function (response) {
         // After the first PubKeyByteLen bytes, the remaining is the bech32 address string.
         var pubAddr = response.slice(PubKeyByteLen, PubKeyByteLen + Bech32AddrLen).toString('utf-8');
         var publicKey = response.toString("hex").slice(0, PubKeyByteLen * 2);
@@ -172,37 +190,132 @@ function () {
     }
   }, {
     key: "signTxn",
-    value: function signTxn(keyIndex, txnParams) {
-      ['version', 'nonce', 'toAddr', 'amount', 'gasPrice', 'gasLimit'].forEach(function (key) {
-        if (!Object.keys(txnParams).includes(key)) {
-          throw new Error("txParams ".concat(key, " is required!"));
-        }
-      });
-      var P1 = 0x00;
-      var P2 = 0x00;
-      var indexBytes = Buffer.alloc(4);
-      indexBytes.writeInt32LE(keyIndex); // Convert to Zilliqa types
+    value: function () {
+      var _signTxn = _asyncToGenerator(
+      /*#__PURE__*/
+      regeneratorRuntime.mark(function _callee2(keyIndex, txnParams) {
+        var P1, P2, indexBytes, txnBytes, STREAM_LEN, txn1Bytes, txn1SizeBytes, hostBytesLeftBytes, payload, response, txnNBytes, txnNSizeBytes, _payload, apduResponse;
 
-      if (!(txnParams.amount instanceof BN)) {
-        txnParams.amount = new BN(txnParams.amount);
+        return regeneratorRuntime.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                ['version', 'nonce', 'toAddr', 'amount', 'gasPrice', 'gasLimit'].forEach(function (key) {
+                  if (!Object.keys(txnParams).includes(key)) {
+                    throw new Error("txParams ".concat(key, " is required!"));
+                  }
+                });
+                P1 = 0x00;
+                P2 = 0x00;
+                indexBytes = Buffer.alloc(4);
+                indexBytes.writeInt32LE(keyIndex); // Convert to Zilliqa types
+
+                if (!(txnParams.amount instanceof BN)) {
+                  txnParams.amount = new BN(txnParams.amount);
+                }
+
+                if (!(txnParams.gasPrice instanceof BN)) {
+                  txnParams.gasPrice = new BN(txnParams.gasPrice);
+                }
+
+                if (!(txnParams.gasLimit instanceof Long)) {
+                  txnParams.gasLimit = Long.fromNumber(txnParams.gasLimit);
+                }
+
+                txnBytes = txnEncoder(txnParams);
+                STREAM_LEN = 32; // Stream in batches of STREAM_LEN bytes each.
+
+                if (txnBytes.length > STREAM_LEN) {
+                  txn1Bytes = txnBytes.slice(0, STREAM_LEN);
+                  txnBytes = txnBytes.slice(STREAM_LEN, undefined);
+                } else {
+                  txn1Bytes = txnBytes;
+                  txnBytes = Buffer.alloc(0);
+                }
+
+                txn1SizeBytes = Buffer.alloc(4);
+                txn1SizeBytes.writeInt32LE(txn1Bytes.length);
+                hostBytesLeftBytes = Buffer.alloc(4);
+                hostBytesLeftBytes.writeInt32LE(txnBytes.length);
+                payload = Buffer.concat([indexBytes, hostBytesLeftBytes, txn1SizeBytes, txn1Bytes]);
+
+                this._transport.setExchangeTimeout(this._nonInteractiveTimeout);
+
+                _context2.next = 19;
+                return this._transport.send(CLA, INS.signTxn, P1, P2, payload);
+
+              case 19:
+                response = _context2.sent;
+
+                this._transport.setExchangeTimeout(this._interactiveTimeout);
+
+              case 21:
+                if (!true) {
+                  _context2.next = 47;
+                  break;
+                }
+
+                console.log(response);
+
+                if (!(txnBytes.length > 0)) {
+                  _context2.next = 43;
+                  break;
+                }
+
+                txnNBytes = null;
+
+                if (txnBytes.length > STREAM_LEN) {
+                  txnNBytes = txnBytes.slice(0, STREAM_LEN);
+                  txnBytes = txnBytes.slice(STREAM_LEN, undefined);
+                } else {
+                  txnNBytes = txnBytes;
+                  txnBytes = Buffer.alloc(0);
+                }
+
+                txnNSizeBytes = Buffer.alloc(4);
+                txnNSizeBytes.writeInt32LE(txnNBytes.length);
+                hostBytesLeftBytes.writeInt32LE(txnBytes.length);
+                _payload = Buffer.concat([hostBytesLeftBytes, txnNSizeBytes, txnNBytes]);
+                _context2.prev = 30;
+                _context2.next = 33;
+                return this._transport.send(CLA, INS.signTxn, P1, P2, _payload);
+
+              case 33:
+                apduResponse = _context2.sent;
+                console.log(apduResponse);
+                response = response.concat(apduResponse);
+                _context2.next = 40;
+                break;
+
+              case 38:
+                _context2.prev = 38;
+                _context2.t0 = _context2["catch"](30);
+
+              case 40:
+                return _context2.abrupt("continue", 21);
+
+              case 43:
+                console.log(response.toString('hex'));
+                return _context2.abrupt("return", response.toString('hex').slice(0, SigByteLen * 2));
+
+              case 45:
+                _context2.next = 21;
+                break;
+
+              case 47:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this, [[30, 38]]);
+      }));
+
+      function signTxn(_x, _x2) {
+        return _signTxn.apply(this, arguments);
       }
 
-      if (!(txnParams.gasPrice instanceof BN)) {
-        txnParams.gasPrice = new BN(txnParams.gasPrice);
-      }
-
-      if (!(txnParams.gasLimit instanceof Long)) {
-        txnParams.gasLimit = Long.fromNumber(txnParams.gasLimit);
-      }
-
-      var encodedTxn = txnEncoder(txnParams);
-      var txnSizeBytes = Buffer.alloc(4);
-      txnSizeBytes.writeInt32LE(encodedTxn.length);
-      var payload = Buffer.concat([indexBytes, txnSizeBytes, encodedTxn]);
-      return this.transport.send(CLA, INS.signTxn, P1, P2, payload).then(function (response) {
-        return response.toString('hex').slice(0, SigByteLen * 2);
-      });
-    }
+      return signTxn;
+    }()
   }]);
 
   return Zilliqa;
