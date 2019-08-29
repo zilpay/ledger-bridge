@@ -32,10 +32,9 @@
   },
   "dependencies": {
     "@babel/polyfill": "^7.4.4",
-    "@ledgerhq/hw-transport-u2f": "^4.68.2",
-    "@ledgerhq/hw-transport-webauthn": "^4.68.2",
-    "@zilliqa-js/zilliqa": "^0.7.4",
-    "core-js": "^3.1.4"
+    "@ledgerhq/hw-transport-u2f": "^4.68.4",
+    "@zilliqa-js/zilliqa": "^0.7.5",
+    "core-js": "^3.2.1"
   },
   "devDependencies": {
     "@babel/core": "^7.5.5",
@@ -43,13 +42,13 @@
     "autoprefixer": "^9.6.1",
     "babelify": "^10.0.0",
     "browser-sync": "^2.26.7",
-    "browserify": "^16.3.0",
+    "browserify": "^16.5.0",
     "cssnano": "^4.1.10",
     "fs-extra": "^8.1.0",
     "gulp": "^4.0.2",
     "gulp-babel": "^8.0.0",
     "gulp-data": "^1.3.1",
-    "gulp-imagemin": "^6.0.0",
+    "gulp-imagemin": "^6.1.0",
     "gulp-nunjucks-render": "^2.2.3",
     "gulp-sourcemaps": "^2.6.5",
     "gulp-uglify": "^3.0.2",
