@@ -2,7 +2,7 @@ const webpack = require('webpack')
 const mode = process.env.NODE_ENV || 'development'
 
 module.exports = {
-  entry: './index.js',
+  entry: './lib/index.js',
   devtool: 'source-map',
   target: 'web',
   module: {

@@ -4,7 +4,7 @@
   "description": "ledger-bridge for insert iframe to extension zilpay",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --config webpack.config.js --progress --colors -o ./dist/index.js",
+    "build": "webpack --config webpack.config.js --progress --colors -o ./index.js",
     "build:prod": "cross-env NODE_ENV=production npm run build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
