@@ -4,7 +4,7 @@ node_modules
 # local env files
 .env.local
 .env.*.local
-
+*.pem
 # Log files
 npm-debug.log*
 yarn-debug.log*
@@ -19,3 +19,4 @@ yarn-error.log*
 *.sln
 *.sw*
 *.zip
+
