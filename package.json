@@ -23,17 +23,17 @@
   },
   "homepage": "https://github.com/zilpay/ledger-bridge#readme",
   "devDependencies": {
-    "@babel/core": "^7.6.2",
-    "@babel/plugin-transform-runtime": "^7.6.2",
-    "@babel/preset-env": "^7.6.2",
-    "@babel/runtime": "^7.6.2",
-    "@ledgerhq/hw-transport-u2f": "^4.70.0",
-    "@zilliqa-js/zilliqa": "^0.8.0-alpha.0",
+    "@babel/core": "^7.10.2",
+    "@babel/plugin-transform-runtime": "^7.10.1",
+    "@babel/preset-env": "^7.10.2",
+    "@babel/runtime": "^7.10.2",
+    "@ledgerhq/hw-transport-u2f": "^5.15.0",
+    "@zilliqa-js/zilliqa": "^0.10.1",
     "babel": "^6.23.0",
     "babel-core": "^6.26.3",
-    "babel-loader": "^8.0.6",
-    "cross-env": "^6.0.0",
-    "webpack": "^4.41.0",
-    "webpack-cli": "^3.3.9"
+    "babel-loader": "^8.1.0",
+    "cross-env": "^7.0.2",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11"
   }
 }
