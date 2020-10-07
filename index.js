@@ -91,7 +91,6 @@
   !*** ./lib/index.js ***!
   \**********************/
 /*! no exports provided */
-/*! ModuleConcatenation bailout: Module is an entry point */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -223,7 +222,6 @@ window.addEventListener('message', function (data) {
   !*** ./lib/interface.js ***!
   \**************************/
 /*! exports provided: default */
-/*! ModuleConcatenation bailout: Module uses injected variables (Buffer) */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -504,7 +502,6 @@ var Zilliqa = /*#__PURE__*/function () {
   !*** ./node_modules/@babel/runtime/helpers/arrayLikeToArray.js ***!
   \*****************************************************************/
 /*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports) {
 
 function _arrayLikeToArray(arr, len) {
@@ -526,7 +523,6 @@ module.exports = _arrayLikeToArray;
   !*** ./node_modules/@babel/runtime/helpers/arrayWithoutHoles.js ***!
   \******************************************************************/
 /*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
 var arrayLikeToArray = __webpack_require__(/*! ./arrayLikeToArray */ "./node_modules/@babel/runtime/helpers/arrayLikeToArray.js");
@@ -544,7 +540,6 @@ module.exports = _arrayWithoutHoles;
   !*** ./node_modules/@babel/runtime/helpers/asyncToGenerator.js ***!
   \*****************************************************************/
 /*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports) {
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
@@ -592,7 +587,6 @@ module.exports = _asyncToGenerator;
   !*** ./node_modules/@babel/runtime/helpers/classCallCheck.js ***!
   \***************************************************************/
 /*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports) {
 
 function _classCallCheck(instance, Constructor) {
@@ -610,7 +604,6 @@ module.exports = _classCallCheck;
   !*** ./node_modules/@babel/runtime/helpers/createClass.js ***!
   \************************************************************/
 /*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports) {
 
 function _defineProperties(target, props) {
@@ -638,7 +631,6 @@ module.exports = _createClass;
   !*** ./node_modules/@babel/runtime/helpers/iterableToArray.js ***!
   \****************************************************************/
 /*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports) {
 
 function _iterableToArray(iter) {
@@ -654,7 +646,6 @@ module.exports = _iterableToArray;
   !*** ./node_modules/@babel/runtime/helpers/nonIterableSpread.js ***!
   \******************************************************************/
 /*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports) {
 
 function _nonIterableSpread() {
@@ -670,7 +661,6 @@ module.exports = _nonIterableSpread;
   !*** ./node_modules/@babel/runtime/helpers/toConsumableArray.js ***!
   \******************************************************************/
 /*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
 var arrayWithoutHoles = __webpack_require__(/*! ./arrayWithoutHoles */ "./node_modules/@babel/runtime/helpers/arrayWithoutHoles.js");
@@ -694,7 +684,6 @@ module.exports = _toConsumableArray;
   !*** ./node_modules/@babel/runtime/helpers/typeof.js ***!
   \*******************************************************/
 /*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports) {
 
 function _typeof(obj) {
@@ -722,7 +711,6 @@ module.exports = _typeof;
   !*** ./node_modules/@babel/runtime/helpers/unsupportedIterableToArray.js ***!
   \***************************************************************************/
 /*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
 var arrayLikeToArray = __webpack_require__(/*! ./arrayLikeToArray */ "./node_modules/@babel/runtime/helpers/arrayLikeToArray.js");
@@ -745,7 +733,6 @@ module.exports = _unsupportedIterableToArray;
   !*** ./node_modules/@babel/runtime/regenerator/index.js ***!
   \**********************************************************/
 /*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(/*! regenerator-runtime */ "./node_modules/regenerator-runtime/runtime.js");
@@ -758,7 +745,6 @@ module.exports = __webpack_require__(/*! regenerator-runtime */ "./node_modules/
   !*** ./node_modules/@ledgerhq/devices/lib/scrambling.js ***!
   \**********************************************************/
 /*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1195,7 +1181,6 @@ addCustomErrorDeserializer("TransportStatusError", function (e) { return new Tra
   !*** ./node_modules/@ledgerhq/hw-transport-u2f/lib-es/TransportU2F.js ***!
   \************************************************************************/
 /*! exports provided: default */
-/*! ModuleConcatenation bailout: Module uses injected variables (Buffer) */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1388,7 +1373,6 @@ TransportU2F.listen = observer => {
   !*** ./node_modules/@ledgerhq/hw-transport-webauthn/lib-es/TransportWebAuthn.js ***!
   \**********************************************************************************/
 /*! exports provided: default */
-/*! ModuleConcatenation bailout: Module uses injected variables (Buffer) */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1510,7 +1494,6 @@ TransportWebAuthn.listen = observer => {
   !*** ./node_modules/@ledgerhq/hw-transport/lib-es/Transport.js ***!
   \*****************************************************************/
 /*! exports provided: TransportError, TransportStatusError, StatusCodes, getAltStatusMessage, default */
-/*! ModuleConcatenation bailout: Module uses injected variables (Buffer) */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1828,7 +1811,6 @@ if (typeof window !== "undefined") {
   !*** ./node_modules/@protobufjs/aspromise/index.js ***!
   \*****************************************************/
 /*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1893,7 +1875,6 @@ function asPromise(fn, ctx/*, varargs */) {
   !*** ./node_modules/@protobufjs/base64/index.js ***!
   \**************************************************/
 /*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2045,7 +2026,6 @@ base64.test = function test(string) {
   !*** ./node_modules/@protobufjs/eventemitter/index.js ***!
   \********************************************************/
 /*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2134,7 +2114,6 @@ EventEmitter.prototype.emit = function emit(evt) {
   !*** ./node_modules/@protobufjs/float/index.js ***!
   \*************************************************/
 /*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2482,7 +2461,6 @@ function readUintBE(buf, pos) {
   !*** ./node_modules/@protobufjs/inquire/index.js ***!
   \***************************************************/
 /*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2512,7 +2490,6 @@ function inquire(moduleName) {
   !*** ./node_modules/@protobufjs/pool/index.js ***!
   \************************************************/
 /*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2573,7 +2550,6 @@ function pool(alloc, slice, size) {
   !*** ./node_modules/@protobufjs/utf8/index.js ***!
   \************************************************/
 /*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2691,7 +2667,6 @@ utf8.write = function utf8_write(string, buffer, offset) {
   !*** ./node_modules/@zilliqa-js/account/dist/util.js ***!
   \*******************************************************/
 /*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2792,7 +2767,6 @@ exports.sleep = sleep;
   !*** ./node_modules/@zilliqa-js/core/dist/index.umd.js ***!
   \*********************************************************/
 /*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function (global, factory) {
@@ -3403,7 +3377,6 @@ exports.sleep = sleep;
   !*** ./node_modules/@zilliqa-js/proto/dist/index.js ***!
   \******************************************************/
 /*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4774,7 +4747,6 @@ module.exports = $root;
   !*** ./node_modules/@zilliqa-js/util/dist/index.umd.js ***!
   \*********************************************************/
 /*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function (global, factory) {
@@ -5211,7 +5183,6 @@ module.exports = $root;
   !*** ./node_modules/base64-js/index.js ***!
   \*****************************************/
 /*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5376,7 +5347,6 @@ function fromByteArray (uint8) {
   !*** ./node_modules/bn.js/lib/bn.js ***!
   \**************************************/
 /*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module) {(function (module, exports) {
@@ -8822,7 +8792,6 @@ function fromByteArray (uint8) {
   !*** ./node_modules/buffer/index.js ***!
   \**************************************/
 /*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10625,7 +10594,6 @@ function isnan (val) {
   !*** ./node_modules/cross-fetch/dist/browser-ponyfill.js ***!
   \***********************************************************/
 /*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __root__ = (function (root) {
@@ -11119,7 +11087,6 @@ module.exports.default = fetch;
   !*** ./node_modules/events/events.js ***!
   \***************************************/
 /*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11608,7 +11575,6 @@ function once(emitter, name) {
   !*** ./node_modules/ieee754/index.js ***!
   \***************************************/
 /*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports) {
 
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
@@ -11704,7 +11670,6 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
   !*** ./node_modules/isarray/index.js ***!
   \***************************************/
 /*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports) {
 
 var toString = {}.toString;
@@ -11721,7 +11686,6 @@ module.exports = Array.isArray || function (arr) {
   !*** ./node_modules/js-sha256/src/sha256.js ***!
   \**********************************************/
 /*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(process, global) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -12253,7 +12217,6 @@ module.exports = Array.isArray || function (arr) {
   !*** ./node_modules/long/src/long.js ***!
   \***************************************/
 /*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports) {
 
 module.exports = Long;
@@ -13588,7 +13551,6 @@ Long.fromBytesBE = function fromBytesBE(bytes, unsigned) {
   !*** ./node_modules/mitt/dist/mitt.es.js ***!
   \*******************************************/
 /*! exports provided: default */
-/*! ModuleConcatenation bailout: Module is referenced from these modules with unsupported syntax: ./node_modules/@zilliqa-js/core/dist/index.umd.js (referenced with cjs require) */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -13666,7 +13628,6 @@ function mitt(all                 ) {
   !*** ./node_modules/process/browser.js ***!
   \*****************************************/
 /*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -13862,7 +13823,6 @@ process.umask = function() { return 0; };
   !*** ./node_modules/protobufjs/minimal.js ***!
   \********************************************/
 /*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13879,7 +13839,6 @@ module.exports = __webpack_require__(/*! ./src/index-minimal */ "./node_modules/
   !*** ./node_modules/protobufjs/src/index-minimal.js ***!
   \******************************************************/
 /*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13928,7 +13887,6 @@ configure();
   !*** ./node_modules/protobufjs/src/reader.js ***!
   \***********************************************/
 /*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14352,7 +14310,6 @@ Reader._configure = function(BufferReader_) {
   !*** ./node_modules/protobufjs/src/reader_buffer.js ***!
   \******************************************************/
 /*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14416,7 +14373,6 @@ BufferReader._configure();
   !*** ./node_modules/protobufjs/src/roots.js ***!
   \**********************************************/
 /*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14447,7 +14403,6 @@ module.exports = {};
   !*** ./node_modules/protobufjs/src/rpc.js ***!
   \********************************************/
 /*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14496,7 +14451,6 @@ rpc.Service = __webpack_require__(/*! ./rpc/service */ "./node_modules/protobufj
   !*** ./node_modules/protobufjs/src/rpc/service.js ***!
   \****************************************************/
 /*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14651,7 +14605,6 @@ Service.prototype.end = function end(endedByRPC) {
   !*** ./node_modules/protobufjs/src/util/longbits.js ***!
   \******************************************************/
 /*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14864,7 +14817,6 @@ LongBits.prototype.length = function length() {
   !*** ./node_modules/protobufjs/src/util/minimal.js ***!
   \*****************************************************/
 /*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15299,7 +15251,6 @@ util._configure = function() {
   !*** ./node_modules/protobufjs/src/writer.js ***!
   \***********************************************/
 /*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15777,7 +15728,6 @@ Writer._configure = function(BufferWriter_) {
   !*** ./node_modules/protobufjs/src/writer_buffer.js ***!
   \******************************************************/
 /*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15875,7 +15825,6 @@ BufferWriter._configure();
   !*** ./node_modules/regenerator-runtime/runtime.js ***!
   \*****************************************************/
 /*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -16635,7 +16584,6 @@ try {
   !*** ./node_modules/tslib/tslib.es6.js ***!
   \*****************************************/
 /*! exports provided: __extends, __assign, __rest, __decorate, __param, __metadata, __awaiter, __generator, __createBinding, __exportStar, __values, __read, __spread, __spreadArrays, __await, __asyncGenerator, __asyncDelegator, __asyncValues, __makeTemplateObject, __importStar, __importDefault, __classPrivateFieldGet, __classPrivateFieldSet */
-/*! ModuleConcatenation bailout: Module is referenced from these modules with unsupported syntax: ./node_modules/@zilliqa-js/account/dist/util.js (referenced with cjs require) */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -16890,7 +16838,6 @@ function __classPrivateFieldSet(receiver, privateMap, value) {
   !*** ./node_modules/u2f-api/index.js ***!
   \***************************************/
 /*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16904,7 +16851,6 @@ module.exports = __webpack_require__( /*! ./lib/u2f-api */ "./node_modules/u2f-a
   !*** ./node_modules/u2f-api/lib/google-u2f-api.js ***!
   \****************************************************/
 /*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17323,7 +17269,6 @@ u2f.register = function(registerRequests, signRequests,
   !*** ./node_modules/u2f-api/lib/u2f-api.js ***!
   \*********************************************/
 /*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -17652,7 +17597,6 @@ makeDefault( 'sign' );
   !*** (webpack)/buildin/amd-options.js ***!
   \****************************************/
 /*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports) {
 
 /* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {/* globals __webpack_amd_options__ */
@@ -17667,7 +17611,6 @@ module.exports = __webpack_amd_options__;
   !*** (webpack)/buildin/global.js ***!
   \***********************************/
 /*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports) {
 
 var g;
@@ -17699,7 +17642,6 @@ module.exports = g;
   !*** (webpack)/buildin/module.js ***!
   \***********************************/
 /*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -17733,7 +17675,6 @@ module.exports = function(module) {
   !*** buffer (ignored) ***!
   \************************/
 /*! no static exports found */
-/*! ModuleConcatenation bailout: Module is not an ECMAScript module */
 /***/ (function(module, exports) {
 
 /* (ignored) */
