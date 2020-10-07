@@ -242,8 +242,6 @@ __webpack_require__.r(__webpack_exports__);
 
 var TransportU2F = __webpack_require__(/*! @ledgerhq/hw-transport-u2f */ "./node_modules/@ledgerhq/hw-transport-u2f/lib-es/TransportU2F.js")["default"];
 
-var TransportWebAuthn = __webpack_require__(/*! @ledgerhq/hw-transport-webauthn */ "./node_modules/@ledgerhq/hw-transport-webauthn/lib-es/TransportWebAuthn.js")["default"];
-
 var _require = __webpack_require__(/*! js-sha256 */ "./node_modules/js-sha256/src/sha256.js"),
     sha256 = _require.sha256;
 
@@ -278,37 +276,17 @@ var Zilliqa = /*#__PURE__*/function () {
     key: "create",
     value: function () {
       var _create = _babel_runtime_helpers_asyncToGenerator__WEBPACK_IMPORTED_MODULE_1___default()( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var isWebAuthn;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return TransportWebAuthn.isSupported();
-
-              case 2:
-                isWebAuthn = _context.sent;
-                console.log(isWebAuthn);
-
-                if (!isWebAuthn) {
-                  _context.next = 8;
-                  break;
-                }
-
-                _context.next = 7;
-                return TransportWebAuthn.create();
-
-              case 7:
-                return _context.abrupt("return", _context.sent);
-
-              case 8:
-                _context.next = 10;
                 return TransportU2F.create();
 
-              case 10:
+              case 2:
                 return _context.abrupt("return", _context.sent);
 
-              case 11:
+              case 3:
               case "end":
                 return _context.stop();
             }
@@ -737,36 +715,6 @@ module.exports = _unsupportedIterableToArray;
 
 module.exports = __webpack_require__(/*! regenerator-runtime */ "./node_modules/regenerator-runtime/runtime.js");
 
-
-/***/ }),
-
-/***/ "./node_modules/@ledgerhq/devices/lib/scrambling.js":
-/*!**********************************************************!*\
-  !*** ./node_modules/@ledgerhq/devices/lib/scrambling.js ***!
-  \**********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(Buffer) {
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.wrapApdu = wrapApdu;
-
-function wrapApdu(apdu, key) {
-  if (apdu.length === 0) return apdu;
-  const result = Buffer.alloc(apdu.length);
-
-  for (let i = 0; i < apdu.length; i++) {
-    result[i] = apdu[i] ^ key[i % key.length];
-  }
-
-  return result;
-}
-//# sourceMappingURL=scrambling.js.map
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../buffer/index.js */ "./node_modules/buffer/index.js").Buffer))
 
 /***/ }),
 
@@ -1364,127 +1312,6 @@ TransportU2F.listen = observer => {
   };
 };
 //# sourceMappingURL=TransportU2F.js.map
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../buffer/index.js */ "./node_modules/buffer/index.js").Buffer))
-
-/***/ }),
-
-/***/ "./node_modules/@ledgerhq/hw-transport-webauthn/lib-es/TransportWebAuthn.js":
-/*!**********************************************************************************!*\
-  !*** ./node_modules/@ledgerhq/hw-transport-webauthn/lib-es/TransportWebAuthn.js ***!
-  \**********************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* WEBPACK VAR INJECTION */(function(Buffer) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return TransportWebAuthn; });
-/* harmony import */ var _ledgerhq_hw_transport__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @ledgerhq/hw-transport */ "./node_modules/@ledgerhq/hw-transport/lib-es/Transport.js");
-/* harmony import */ var _ledgerhq_errors__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @ledgerhq/errors */ "./node_modules/@ledgerhq/errors/dist/index.js");
-/* harmony import */ var _ledgerhq_devices_lib_scrambling__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ledgerhq/devices/lib/scrambling */ "./node_modules/@ledgerhq/devices/lib/scrambling.js");
-/* harmony import */ var _ledgerhq_devices_lib_scrambling__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_ledgerhq_devices_lib_scrambling__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _ledgerhq_logs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ledgerhq/logs */ "./node_modules/@ledgerhq/logs/lib-es/index.js");
-
-
-
-
-
-const attemptExchange = (apdu, timeout, scrambleKey) => {
-  if (!scrambleKey) {
-    throw new _ledgerhq_errors__WEBPACK_IMPORTED_MODULE_1__["TransportError"]("transport.setScrambleKey must be used to set a scramble key. Refer to documentation.", "NoScrambleKey");
-  }
-
-  if (!navigator.credentials) {
-    throw new _ledgerhq_errors__WEBPACK_IMPORTED_MODULE_1__["TransportError"]("WebAuthn not supported", "NotSupported");
-  }
-
-  return navigator.credentials // $FlowFixMe
-  .get({
-    publicKey: {
-      timeout,
-      challenge: new Uint8Array(32),
-      allowCredentials: [{
-        type: "public-key",
-        id: new Uint8Array(Object(_ledgerhq_devices_lib_scrambling__WEBPACK_IMPORTED_MODULE_2__["wrapApdu"])(apdu, scrambleKey))
-      }]
-    }
-  }) // $FlowFixMe
-  .then(r => Buffer.from(r.response.signature));
-};
-/**
- * WebAuthn Transport implementation
- * @example
- * import TransportWebAuthn from "@ledgerhq/hw-transport-webauthn";
- * ...
- * TransportWebAuthn.create().then(transport => ...)
- */
-
-
-class TransportWebAuthn extends _ledgerhq_hw_transport__WEBPACK_IMPORTED_MODULE_0__["default"] {
-  constructor(...args) {
-    super(...args);
-    this.scrambleKey = void 0;
-  }
-
-  static async open() {
-    return new TransportWebAuthn();
-  }
-  /**
-   * Exchange with the device using APDU protocol.
-   * @param apdu
-   * @returns a promise of apdu response
-   */
-
-
-  async exchange(apdu) {
-    Object(_ledgerhq_logs__WEBPACK_IMPORTED_MODULE_3__["log"])("apdu", "=> " + apdu.toString("hex"));
-    const res = await attemptExchange(apdu, this.exchangeTimeout, this.scrambleKey);
-    Object(_ledgerhq_logs__WEBPACK_IMPORTED_MODULE_3__["log"])("apdu", "<= " + res.toString("hex"));
-    return res;
-  }
-  /**
-   * A scramble key is a string that xor the data exchanged.
-   * It depends on the device app you need to exchange with.
-   * For instance it can be "BTC" for the bitcoin app, "B0L0S" for the dashboard.
-   *
-   * @example
-   * transport.setScrambleKey("B0L0S")
-   */
-
-
-  setScrambleKey(scrambleKey) {
-    this.scrambleKey = Buffer.from(scrambleKey, "ascii");
-  }
-
-  close() {
-    return Promise.resolve();
-  }
-
-}
-
-TransportWebAuthn.isSupported = () => Promise.resolve(!!navigator.credentials);
-
-TransportWebAuthn.list = () => navigator.credentials ? [null] : [];
-
-TransportWebAuthn.listen = observer => {
-  setTimeout(() => {
-    if (!navigator.credentials) {
-      observer.error(new _ledgerhq_errors__WEBPACK_IMPORTED_MODULE_1__["TransportError"]("WebAuthn not supported", "NotSupported"));
-      return {
-        unsubscribe: () => {}
-      };
-    }
-
-    observer.next({
-      type: "add",
-      descriptor: null
-    });
-    observer.complete();
-  }, 0);
-  return {
-    unsubscribe: () => {}
-  };
-};
-//# sourceMappingURL=TransportWebAuthn.js.map
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../buffer/index.js */ "./node_modules/buffer/index.js").Buffer))
 
 /***/ }),
