@@ -1,10 +1,29 @@
 const webpack = require('webpack')
+const TerserPlugin = require('terser-webpack-plugin');
+
 const mode = process.env.NODE_ENV || 'development'
 
 module.exports = {
   entry: './lib/index.js',
   devtool: false,
   target: 'web',
+  optimization: {
+    minimizer: [
+      new TerserPlugin({
+        sourceMap: true,
+        cache: true,
+        parallel: true,
+        terserOptions: {
+          mangle: false,
+          keep_classnames: true,
+          keep_fnames: true,
+          output: {
+            comments: false
+          }
+        }
+      }),
+    ]
+  },
   module: {
     rules: [
       {
@@ -24,7 +43,6 @@ module.exports = {
     modules: ['./node_modules']
   },
   plugins: [
-    new webpack.optimize.ModuleConcatenationPlugin(),
     new webpack.DefinePlugin({
       ENVIRONMENT: JSON.stringify(mode)
     })
