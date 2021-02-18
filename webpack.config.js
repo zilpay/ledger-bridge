@@ -3,7 +3,7 @@ const mode = process.env.NODE_ENV || 'development'
 
 module.exports = {
   entry: './lib/index.js',
-  devtool: 'source-map',
+  devtool: false,
   target: 'web',
   module: {
     rules: [
